@@ -19,7 +19,7 @@ api_histogram:
             formatter: ApiHistogramBundle\Cleaners\CurrencyCleaner
             database:
                 table_name: currency
-                create_table: true
+                create_table: true # TODO: use this value
 
 framework:
     #esi:             ~
