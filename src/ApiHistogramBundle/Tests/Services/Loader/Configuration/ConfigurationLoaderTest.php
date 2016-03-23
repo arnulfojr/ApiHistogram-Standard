@@ -6,6 +6,10 @@ use ApiHistogramBundle\Services\Loader\Configuration\Builder\ConfigurationBuilde
 use ApiHistogramBundle\Services\Loader\Configuration\ConfigurationLoader;
 use \PHPUnit_Framework_TestCase as TestCase;
 
+/**
+ * Class ConfigurationLoaderTest
+ * @package ApiHistogramBundle\Tests\Services\Loader\Configuration
+ */
 class ConfigurationLoaderTest extends TestCase
 {
     /** @var array $config */
@@ -22,6 +26,9 @@ class ConfigurationLoaderTest extends TestCase
     }
 
 
+    /**
+     * Data provider is defined in the ConfigurationVariables Class
+     */
     public function testLoad()
     {
         $configBuilderMock = $this->prophesize(ConfigurationVariables::CONFIGURATION_BUILDER_CLASS);

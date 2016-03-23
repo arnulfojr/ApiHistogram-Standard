@@ -4,6 +4,7 @@ namespace ApiHistogramBundle\Tests\Services\Loader\Configuration;
 
 
 use ApiHistogramBundle\Container\Configuration\Configuration;
+use ApiHistogramBundle\Container\Configuration\Database\DatabaseConfiguration;
 use ApiHistogramBundle\Container\Configuration\SiteCapsule;
 use ApiHistogramBundle\Container\Configuration\URL\URL;
 
@@ -30,7 +31,8 @@ class ConfigurationVariables
                     "url"=>"http://www.google.com",
                     "formatter"=>'ApiHistogram\Formatter\Class',
                     "database"=>[
-                        "table_name"=>"currency"
+                        "table_name"=>"currency",
+                        "create_table"=>true
                     ]
                 ],
                 "stocks"=>[
@@ -38,7 +40,8 @@ class ConfigurationVariables
                     "url"=>"http://www.yahoo.com",
                     "formatter"=>'ApiHistogram\Formatter\AnotherClass',
                     "database"=>[
-                        "table_name"=>"stocks"
+                        "table_name"=>"stocks",
+                        "create_table"=>false
                     ]
                 ]
             ]
@@ -66,13 +69,20 @@ class ConfigurationVariables
         {
             $web = new SiteCapsule();
             $url = new URL();
+            $dbConfig = new DatabaseConfiguration();
 
             $web->setFormatterName($site["formatter"]);
             $web->setTableName($site["database"]["table_name"]);
+            $web->setCreateTable($site["database"]["create_table"]);
             $web->setName($site["name"]);
 
             $url->setUrl($site["url"]);
+
+            $dbConfig->setCreateTable($site["database"]["create_table"]);
+            $dbConfig->setTableName($site["database"]["table_name"]);
+
             $web->setURL($url);
+            $web->setDatabaseConfiguration($dbConfig);
 
             $toReturn[$name] = $web;
         }

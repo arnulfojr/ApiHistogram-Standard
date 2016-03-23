@@ -19,7 +19,7 @@ use \InvalidArgumentException;
 class DynamicEntityManager
 {
     /** @var EntityManagerInterface $_em */
-    private $_em;
+    private $_em = NULL;
     /** @var Registry $doctrine */
     protected $doctrine;
 
@@ -110,7 +110,27 @@ class DynamicEntityManager
      */
     protected function getTableExpression(SiteCapsuleInterface $capsule, ConfigurationInterface $configuration)
     {
-        return "{$configuration->getSchemaName()}.{$capsule->getTableName()}";
+        return "{$configuration->getSchemaName()}.{$capsule->getDatabaseConfiguration()->getTableName()}";
+    }
+
+    /**
+     *
+     * Validates the data type, if it is not a valid type then returns the valid type
+     *
+     * @param string $type
+     * @return string
+     */
+    protected function validateType($type)
+    {
+        // TODO: fill all other fields
+        switch ($type)
+        {
+            case "double":
+                return "float";
+            break;
+            default:
+                return $type;
+        }
     }
 
 }

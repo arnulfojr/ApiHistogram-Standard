@@ -3,6 +3,7 @@
 namespace ApiHistogramBundle\Services\Persist;
 
 use ApiHistogramBundle\Container\Configuration\SiteCapsuleInterface;
+use ApiHistogramBundle\Exception\ApiHistogramException;
 use ApiHistogramBundle\Exception\Persist\PersistException;
 use ApiHistogramBundle\Exception\Repository\RepositoryException;
 use ApiHistogramBundle\Repository\Dynamic\DynamicRepository;
@@ -36,8 +37,11 @@ class BasePersistent
     {
         try
         {
-            /** @var SymfonyStyle $io */
-            $io->text("Will save {$capsule->getName()}");
+            if (!is_null($io))
+            {
+                /** @var SymfonyStyle $io */
+                $io->text("Will save {$capsule->getName()}");
+            }
 
             $this->repository->executeInsertSQL($capsule, $toSave);
         }
@@ -45,9 +49,8 @@ class BasePersistent
         {
             // TODO: add constant messages!
             // TODO: create the table if needed
-            $io->error("{$e->getMessage()}");
             throw new PersistException(
-                "",
+                $e->getMessage(),
                 3,
                 $e
             );

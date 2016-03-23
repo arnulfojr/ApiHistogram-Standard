@@ -2,13 +2,15 @@
 
 namespace ApiHistogramBundle\Repository\Dynamic;
 
-
 use ApiHistogramBundle\Container\Configuration\SiteCapsuleInterface;
 use ApiHistogramBundle\Exception\ExceptionParameters;
+use ApiHistogramBundle\Exception\Persist\PersistException;
 use ApiHistogramBundle\Exception\Repository\RepositoryException;
 use ApiHistogramBundle\Services\SiteManager\SiteManager;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Schema\AbstractSchemaManager;
+use Doctrine\DBAL\Schema\Table;
 
 /**
  * Class DynamicRepository
@@ -43,21 +45,26 @@ class DynamicRepository extends DynamicEntityManager
         try
         {
             $sysConfig = $this->siteManager->getSystemConfiguration();
-            $connectionName = $sysConfig->getConnectionName();
 
-            $this->setUp($connectionName);
+            $this->setUp($sysConfig->getConnectionName());
 
             $connection = $this->getConnection();
 
             // Set schema.tableName to save in
             $tableExpression = $this->getTableExpression($capsule, $sysConfig);
 
+            if ($capsule->getDatabaseConfiguration()->willCreateTable())
+            {
+                $this->createTable($capsule, $parameters);
+            }
+
             return $connection->insert($tableExpression, $parameters);
         }
         catch (RepositoryException $e)
         {
+
             throw new RepositoryException(
-                ExceptionParameters::EXECUTE_INSERT_ENTITY_MANAGER_NULL,
+                $e->getMessage(),
                 ExceptionParameters::EXECUTE_INSERT_ENTITY_MANAGER_NULL_CODE,
                 $e
             );
@@ -76,10 +83,74 @@ class DynamicRepository extends DynamicEntityManager
      * Creates Table needed to persist the wished response
      * @param SiteCapsuleInterface $capsule
      * @param array $parameters
+     * @throws PersistException
      */
     protected function createTable(SiteCapsuleInterface $capsule, array $parameters)
     {
-        // TODO: implement this here!
+        if ($this->tableExists($capsule))
+        {
+            return;
+        }
+
+        $connection = $this->getConnection();
+        /** @var AbstractSchemaManager $schemaManager */
+        $schemaManager = $connection->getSchemaManager();
+
+        $table = $this->buildTable($capsule, $parameters);
+
+        $schemaManager->createTable($table);
+    }
+
+
+    /**
+     * @param SiteCapsuleInterface $capsule
+     * @param array $parameters
+     * @return Table
+     * @throws RepositoryException
+     */
+    private function buildTable(SiteCapsuleInterface $capsule, array $parameters)
+    {
+        try
+        {
+            $table = new Table($capsule->getDatabaseConfiguration()->getTableName());
+
+            $idColumn = $table->addColumn("id", "integer", [
+                "unsigned"=>true
+            ]);
+            $idColumn->setAutoincrement(true);
+            $table->setPrimaryKey(["id"]);
+
+            foreach ($parameters as $key=>$parameter)
+            {
+                $type = $this->validateType(gettype($parameter));
+                $table->addColumn($key, $type);
+            }
+
+            return $table;
+        }
+        catch (\Exception $e) // TODO: catch the right exception
+        {
+            throw new RepositoryException(
+                $e->getMessage(),
+                $e->getCode(),
+                $e
+            );
+        }
+    }
+
+    /**
+     * @param SiteCapsuleInterface $capsule
+     * @return boolean
+     */
+    public function tableExists(SiteCapsuleInterface $capsule)
+    {
+        $tableName = $capsule->getDatabaseConfiguration()->getTableName();
+        $connection = $this->getConnection();
+
+        /** @var AbstractSchemaManager $schemaManager */
+        $schemaManager = $connection->getSchemaManager();
+
+        return $schemaManager->tablesExist([$tableName]);
     }
 
 }

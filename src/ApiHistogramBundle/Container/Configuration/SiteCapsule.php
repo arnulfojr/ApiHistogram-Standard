@@ -2,10 +2,16 @@
 
 namespace ApiHistogramBundle\Container\Configuration;
 
-
 use ApiHistogramBundle\Cleaners\CleanerInterface;
+use ApiHistogramBundle\Container\Configuration\Database\DatabaseConfigurationInterface;
 use ApiHistogramBundle\Container\Configuration\URL\URLContainerInterface;
+use ApiHistogramBundle\Exception\ExceptionParameters;
+use \InvalidArgumentException;
 
+/**
+ * Class SiteCapsule
+ * @package ApiHistogramBundle\Container\Configuration
+ */
 class SiteCapsule implements SiteCapsuleInterface
 {
     /** @var string $tableName */
@@ -18,6 +24,10 @@ class SiteCapsule implements SiteCapsuleInterface
     private $formatter;
     /** @var null|CleanerInterface $cleaner */
     private $cleaner = NULL;
+    /** @var bool $createTable */
+    private $createTable = false;
+    /** @var null|DatabaseConfigurationInterface $databaseConfiguration */
+    private $databaseConfiguration = NULL;
 
     /**
      * @return string
@@ -112,5 +122,52 @@ class SiteCapsule implements SiteCapsuleInterface
     public function getCleaner()
     {
         return $this->cleaner;
+    }
+
+    /**
+     * @param boolean $condition
+     * @return SiteCapsuleInterface
+     */
+    public function setCreateTable($condition)
+    {
+        if (is_bool($condition))
+        {
+            $this->createTable = $condition;
+            return $this;
+        }
+
+        $givenClass = get_class($condition);
+
+        throw new InvalidArgumentException(
+            "Expected a boolean value at SiteCapsule's setCreateTable method, got {$givenClass} instead",
+            ExceptionParameters::INVALID_ARGUMENT_CODE
+        );
+    }
+
+    /**
+     * @return boolean
+     */
+    public function willCreateTable()
+    {
+        return $this->createTable;
+    }
+
+    /**
+     * @param DatabaseConfigurationInterface $configuration
+     * @return SiteCapsuleInterface
+     */
+    public function setDatabaseConfiguration(DatabaseConfigurationInterface $configuration)
+    {
+        $this->databaseConfiguration = $configuration;
+
+        return $this;
+    }
+
+    /**
+     * @return DatabaseConfigurationInterface
+     */
+    public function getDatabaseConfiguration()
+    {
+        return $this->databaseConfiguration;
     }
 }

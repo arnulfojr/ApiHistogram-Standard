@@ -48,7 +48,23 @@ class Persist extends BasePersistent implements PersistInterface
                 $io->note("Will persist data fetched for {$capsule->getName()}");
             }
 
-            $this->save($capsule, $toSave, $io);
+            try
+            {
+                $this->save($capsule, $toSave, $io);
+
+                if (!is_null($io))
+                {
+                    $io->note("Persisted");
+                }
+            }
+            catch (ApiHistogramException $e)
+            {
+                if (!is_null($io))
+                {
+                    $io->error("Error while persisting {$capsule->getName()}");
+                    $io->error($e->getMessage());
+                }
+            }
 
             return;
         }
@@ -58,7 +74,7 @@ class Persist extends BasePersistent implements PersistInterface
             // TODO: Change the description for constants!
             $io->error("Cleaner was not loaded");
         }
-        throw new ApiHistogramException("", 2);
+        throw new ApiHistogramException("", 2); // TODO: add values
     }
 
 }

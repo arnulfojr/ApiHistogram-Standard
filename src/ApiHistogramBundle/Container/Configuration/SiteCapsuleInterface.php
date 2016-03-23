@@ -1,7 +1,9 @@
 <?php
 
 namespace ApiHistogramBundle\Container\Configuration;
+
 use ApiHistogramBundle\Cleaners\CleanerInterface;
+use ApiHistogramBundle\Container\Configuration\Database\DatabaseConfigurationInterface;
 use ApiHistogramBundle\Container\Configuration\URL\URLContainerInterface;
 
 /**
@@ -12,11 +14,13 @@ use ApiHistogramBundle\Container\Configuration\URL\URLContainerInterface;
 interface SiteCapsuleInterface
 {
     /**
+     * @deprecated Use DatabaseConfigurationInterface instead
      * @return string
      */
     public function getTableName();
 
     /**
+     * @deprecated Use DatabaseConfigurationInterface instead
      * @param string $tableName
      * @return SiteCapsuleInterface
      */
@@ -65,5 +69,29 @@ interface SiteCapsuleInterface
      * @return CleanerInterface
      */
     public function getCleaner();
+
+    /**
+     * @deprecated Use DatabaseConfigurationInterface instead
+     * @param boolean $condition
+     * @return SiteCapsuleInterface
+     */
+    public function setCreateTable($condition);
+
+    /**
+     * @return boolean
+     * @deprecated Use DatabaseConfigurationInterface instead
+     */
+    public function willCreateTable();
+
+    /**
+     * @param DatabaseConfigurationInterface $configuration
+     * @return SiteCapsuleInterface
+     */
+    public function setDatabaseConfiguration(DatabaseConfigurationInterface $configuration);
+
+    /**
+     * @return DatabaseConfigurationInterface
+     */
+    public function getDatabaseConfiguration();
 
 }

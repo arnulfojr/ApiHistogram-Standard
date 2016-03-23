@@ -75,6 +75,19 @@ class ExceptionParameters
         return "{$text}, {$description}";
     }
 
+    const VALIDATOR_VALUE_NOT_PRESENT = "A required value was not present";
+
+    const VALIDATOR_VALUE_NOT_PRESENT_CODE = 535;
+
+    /**
+     * @param $description
+     * @return string
+     */
+    static public function getValueNotPresent($description)
+    {
+        $message = ExceptionParameters::VALIDATOR_VALUE_NOT_PRESENT;
+        return "{$message}, {$description}";
+    }
 
 
     const COMMAND_LOADING_SITES_MESSAGE = "An error popped while attempting to load the sites";
@@ -153,5 +166,6 @@ class ExceptionParameters
 
     // MISC:
     const INTERFACE_NOT_FOUND_MESSAGE = "The given interface was not found";
+    const INVALID_ARGUMENT_CODE = 600;
 
 }
