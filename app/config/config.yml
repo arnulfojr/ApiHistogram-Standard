@@ -15,10 +15,11 @@ api_histogram:
     sites:
         usd_fare:
             name: USD Fare
-            url: http://apilayer.net/api/live?access_key=df4be435670ab4d7aaab0ae620458a55&currencies=USD,AUD,CAD,PLN,MXN&format=1
+            url: %currency_url%
             formatter: ApiHistogramBundle\Cleaners\CurrencyCleaner
             database:
                 table_name: currency
+                create_table: true
 
 framework:
     #esi:             ~
