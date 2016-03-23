@@ -2,6 +2,7 @@
 
 namespace ApiHistogramBundle\Cleaners;
 
+use ApiHistogramBundle\Cleaners\Helper\CleanerHelper;
 use ApiHistogramBundle\Exception\Cleaners\CleanerException;
 use ApiHistogramBundle\Exception\ExceptionParameters;
 use GuzzleHttp\Message\Response;
@@ -10,7 +11,7 @@ use GuzzleHttp\Message\Response;
  * Class CurrencyCleaner
  * @package ApiHistogramBundle\Cleaners
  */
-class CurrencyCleaner implements CleanerInterface
+class CurrencyCleaner extends CleanerHelper implements CleanerInterface
 {
 
     const QUOTES = 'quotes';
@@ -57,42 +58,6 @@ class CurrencyCleaner implements CleanerInterface
             ExceptionParameters::CLEANER_EXCEPTION_MESSAGE,
             ExceptionParameters::CLEANER_EXCEPTION_STRUCTURE_CODE
         );
-    }
-
-    /**
-     * @param array $dirty
-     * @param array $removable
-     * @return array
-     */
-    protected function removeAttributes(array $dirty, array $removable)
-    {
-        $cleaned = $dirty;
-
-        foreach ($removable as $attr)
-        {
-            if (array_key_exists($attr, $cleaned))
-            {
-                unset($cleaned[$attr]);
-            }
-        }
-
-        return $cleaned;
-    }
-
-    /**
-     * @param array $dirty
-     * @param array $keys
-     * @return array
-     */
-    public function renameKeys(array $dirty, array $keys)
-    {
-        foreach ($keys as $old=>$new)
-        {
-            $dirty[$new] = $dirty[$old];
-            unset($dirty[$old]);
-        }
-
-        return $dirty;
     }
 
     /**

@@ -54,7 +54,7 @@ class Persist extends BasePersistent implements PersistInterface
 
                 if (!is_null($io))
                 {
-                    $io->note("Persisted");
+                    $io->success("{$capsule->getName()} data persisted");
                 }
             }
             catch (ApiHistogramException $e)

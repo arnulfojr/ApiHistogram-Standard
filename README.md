@@ -1,42 +1,49 @@
 ApiHistogram
 ============
 
-Under development (23 March 2016)
+ApiHistogram aims to create a history of your API responses and stores
+the response in your database, so you can analyse variable data coming
+from any web service that does not offer historical data, or to create
+your own historical data based on a third party service.
 
-Dev release and Documentation - 25 March 2016
-
----------------------------------------------
+--------------------------------------------
 
 Installation
 ============
 
-- If you wish to use the bundle, remember this is not yet released
-software.
-- For installing clone the repository.
-- Call ```composer install``` or ```composer update``` to get all
+- To use this Standard version, what you need to do first is to clone
+the repository.
+- Then call ```composer install``` or ```composer update``` to get all
 the dependencies set.
-- Enable ```ApiHistogramBundle``` in the Kernel (not needed in the
-Standard version)
 - Fill the currency_url from the ```parameters``` file.
-    + I used http://apilayer.net/api/live
-- Be sure the response matches the ```CurrencyCleaner``` formatting,
-else develop your own by implementing the ```CleanerInterface``` and
-define the wished namespace to load the ```Cleaner``` in the config
-file inside the website definition ```formatter```
-    + For now ```ApiHistogram``` does not create the table on the first
-    API call, will in the future but for now set the table structure
-    in advance.
+    + I used http://apilayer.net/api/live so the Cleaner given in the
+    config file is design for it.
+    + If you change the web service make sure you define the desired
+    ```CleanerInterface``` instance.
+- Make sure you set your database's configuration in the parameter's
+file.
+- You're done!
 
 ---------
 
 Description
 ===========
 
-ApiHistogram allows developers to query API data and save
- the response data automatically and  trying to be as flexible as
- possible.
+ApiHistogram allows developers to query API data and save the response
+data automatically while trying to be the most flexible as possible.
+ApiHistogram focuses on performance, so all calls are asynchronous.
  
 This allows to have "LIVE" data coming every time the command line tool
 is called ```php app/console api-histogram:update```
 
 ----------------------------------------------------
+
+Usage
+=====
+
+- To use the application, make sure you define your ```sites```in the
+configuration file ```config.yml```.
+    + Recommendation: Use a separate file to define your calls.
+- And every time you call the command
+```php app/console api-histogram:update``` ApiHistogram will append the
+new data to the database.

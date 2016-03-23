@@ -2,13 +2,14 @@
 
 namespace ApiHistogramBundle\Cleaners;
 
+use ApiHistogramBundle\Cleaners\Helper\CleanerHelper;
 use GuzzleHttp\Message\Response;
 
 /**
  * Class YahooStockCleaner
  * @package ApiHistogramBundle\Cleaners
  */
-class YahooStockCleaner implements CleanerInterface
+class YahooStockCleaner extends CleanerHelper implements CleanerInterface
 {
 
     /**
@@ -18,7 +19,12 @@ class YahooStockCleaner implements CleanerInterface
      */
     public function clean(Response $response)
     {
-        // TODO: Implement clean() method.
+        $body = $response->json();
+        $resources = $body["list"]["resources"];
+
+        $cleaned = array_pop($resources);
+
+        return $cleaned;
     }
 
     /**
@@ -31,6 +37,15 @@ class YahooStockCleaner implements CleanerInterface
      */
     public function structure($response)
     {
-        // TODO: Implement structure() method.
+        $resource = $response["resource"];
+        $fields = $resource["fields"];
+
+        $ok = [
+            "price"=>floatval($fields["price"]),
+            "timestamp"=>floatval($fields["ts"]),
+            "volume"=>floatval($fields["volume"])
+        ];
+
+        return $ok;
     }
 }

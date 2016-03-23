@@ -24,19 +24,19 @@ class CurrencyCleanerTest extends TestCase
 
 
     /**
-     * @param $response
+     * @param $responseData
      * @param $expected
      * @dataProvider responseContentProvider
      * @return array
      */
-    public function testClean($response, $expected)
+    public function testClean($responseData, $expected)
     {
         $responseMock = $this->prophesize(ConfigurationVariables::RESPONSE_NAMESPACE);
 
         //config
         $responseMock
             ->json()
-            ->willReturn($response);
+            ->willReturn($responseData);
 
         /** @var Response $response */
         $response = $responseMock->reveal();

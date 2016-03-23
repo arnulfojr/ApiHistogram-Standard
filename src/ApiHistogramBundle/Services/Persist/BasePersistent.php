@@ -3,7 +3,6 @@
 namespace ApiHistogramBundle\Services\Persist;
 
 use ApiHistogramBundle\Container\Configuration\SiteCapsuleInterface;
-use ApiHistogramBundle\Exception\ApiHistogramException;
 use ApiHistogramBundle\Exception\Persist\PersistException;
 use ApiHistogramBundle\Exception\Repository\RepositoryException;
 use ApiHistogramBundle\Repository\Dynamic\DynamicRepository;

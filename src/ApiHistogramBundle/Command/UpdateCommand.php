@@ -120,7 +120,7 @@ class UpdateCommand extends ContainerAwareCommand
                 $updater->update($capsule);
             }
 
-            $io->note("Done fetching");
+            $io->note("Done calling API's");
         }
         catch (\Exception $e)
         {
