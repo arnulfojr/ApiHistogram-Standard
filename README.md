@@ -1,4 +1,6 @@
-.checkout
-=========
+ApiHistogram
+============
 
-A Symfony project created on March 14, 2016, 7:34 pm.
+Under development - 23 March 2016
+
+Dev release and Documentation - 30 March 2016
