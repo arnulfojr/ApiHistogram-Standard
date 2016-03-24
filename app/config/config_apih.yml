@@ -1,0 +1,19 @@
+#ApiHistogramBundle
+api_histogram: # TODO: change the "formatter" field name for "cleaner"
+    connection: default
+    schema_name: histogram
+    sites:
+        usd_fare:
+            name: USD Fare
+            url: %currency_url%
+            formatter: ApiHistogramBundle\Cleaners\CurrencyCleaner
+            database:
+                table_name: currency
+                create_table: true
+        apple_stock:
+            name: Apple Stock
+            url: http://finance.yahoo.com/webservice/v1/symbols/AAPL/quote?format=json
+            formatter: ApiHistogramBundle\Cleaners\YahooStockCleaner
+            database:
+                table_name: apple_stock
+                create_table: true

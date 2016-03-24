@@ -49,3 +49,24 @@ configuration file ```config.yml```.
 - And every time you call the command
 ```php app/console api-histogram:update``` ApiHistogram will append the
 new data to the database.
+
+Future development
+==================
+
+- The Api calls are now being used with a simple GET HTTP method. As
+this is a good approach for a REST-full approach, no extra headers are
+being placed in the request. So next step will be to add optional
+headers to the HTTP Request.
+- For now, all data is being saved in one schema in one connection,
+in future releases using different schemas for different connections
+ for individual calls will be possible.
+- New ideas coming soon!
+
+
+Contact
+=======
+
+Arnulfo Solis
+email: arnulfojr@kuzzy.com
+twitter: @arnulfojr
+Demo: http://qcharts.myarny.org

@@ -2,31 +2,12 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
+    - { resource: config_apih.yml } # ApiHistogram Config
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
-
-#ApiHistogramBundle
-api_histogram:
-    connection: default
-    schema_name: histogram
-    sites:
-        usd_fare:
-            name: USD Fare
-            url: %currency_url%
-            formatter: ApiHistogramBundle\Cleaners\CurrencyCleaner
-            database:
-                table_name: currency
-                create_table: true
-        apple_stock:
-            name: Apple Stock
-            url: http://finance.yahoo.com/webservice/v1/symbols/AAPL/quote?format=json
-            formatter: ApiHistogramBundle\Cleaners\YahooStockCleaner
-            database:
-                table_name: apple_stock
-                create_table: true
 
 framework:
     #esi:             ~
