@@ -16,6 +16,8 @@ target's ```AppKernel```.
 - Once you have registered ApiHistogram's Bundle, you can go ahead and
  configure it.
     + Configuration for a site:
+        - formatter must be a ```CleanerInterface``` instance!
+            + Namespace: ```ApiHistogramBundle\Cleaners```
 ```yml
 # config.yml
 imports:
@@ -45,3 +47,4 @@ api_histogram:
 
 - Every time you run the command ```app/console api-histogram:update```
 all your registered sites will be updated.
+    + Tip: use a cron job to update it automatically for you!
