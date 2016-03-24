@@ -15,8 +15,8 @@ Installation
 the repository.
 - Then call ```composer install``` or ```composer update``` to get all
 the dependencies set.
-- Make sure that the ```ApiHistogramBundle``` is registered in the 
-```AppKernel```.
+- Make sure that the ```ApiHistogramBundle``` is registered in
+the ```AppKernel```.
 - Fill the currency_url from the ```parameters``` file.
     + I used http://apilayer.net/api/live so the Cleaner given in the
     config file is design for it.
