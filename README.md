@@ -66,7 +66,7 @@ in future releases using different schemas for different connections
 Contact
 =======
 
-Arnulfo Solis
-email: arnulfojr@kuzzy.com
-twitter: @arnulfojr
-Demo: http://qcharts.myarny.org/qcharts
+- Arnulfo Solis
+- Email: arnulfojr@kuzzy.com
+- Twitter: @arnulfojr
+- Demo: http://qcharts.myarny.org/qcharts
