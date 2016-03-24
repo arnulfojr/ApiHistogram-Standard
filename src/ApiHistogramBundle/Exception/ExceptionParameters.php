@@ -89,6 +89,35 @@ class ExceptionParameters
         return "{$message}, {$description}";
     }
 
+    const CLEANER_IS_NULL_MESSAGE = "The given Cleaner was NULL";
+    const CLEANER_IS_NULL_CODE = 536;
+    const CLEANER_IS_NOT_VALID_MESSAGE = "The given Cleaner was not given or not loaded";
+    const CLEANER_IS_NOT_VALID_CODE = 536;
+
+    /**
+     * @param $description
+     * @return string
+     */
+    static public function getCleanerIsNotValidOrNull($description)
+    {
+        $message = ExceptionParameters::CLEANER_IS_NOT_VALID_MESSAGE;
+        return "{$message}, {$description}";
+    }
+
+
+    const PERSISTENT_INSERT_ERROR_MESSAGE = "While persisting, the SQL insert query threw an exception";
+
+    const PERSISTENT_INSERT_ERROR_CODE = 540;
+
+    /**
+     * @param $description
+     * @return string
+     */
+    static public function getPersistentInsertError($description)
+    {
+        $message = ExceptionParameters::PERSISTENT_INSERT_ERROR_MESSAGE;
+        return "{$message}, {$description}";
+    }
 
     const COMMAND_LOADING_SITES_MESSAGE = "An error popped while attempting to load the sites";
 

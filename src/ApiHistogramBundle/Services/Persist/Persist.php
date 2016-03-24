@@ -5,6 +5,7 @@ namespace ApiHistogramBundle\Services\Persist;
 use ApiHistogramBundle\Cleaners\CleanerInterface;
 use ApiHistogramBundle\Container\Configuration\SiteCapsuleInterface;
 use ApiHistogramBundle\Exception\ApiHistogramException;
+use ApiHistogramBundle\Exception\ExceptionParameters;
 use ApiHistogramBundle\Repository\Dynamic\DynamicRepository;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
@@ -71,10 +72,13 @@ class Persist extends BasePersistent implements PersistInterface
 
         if (!is_null($io))
         {
-            // TODO: Change the description for constants!
-            $io->error("Cleaner was not loaded");
+            $io->error(ExceptionParameters::CLEANER_IS_NOT_VALID_MESSAGE);
         }
-        throw new ApiHistogramException("", 2); // TODO: add values
+
+        throw new ApiHistogramException(
+            ExceptionParameters::CLEANER_IS_NULL_MESSAGE,
+            ExceptionParameters::CLEANER_IS_NULL_CODE
+        );
     }
 
 }

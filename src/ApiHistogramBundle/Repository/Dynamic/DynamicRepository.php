@@ -128,7 +128,15 @@ class DynamicRepository extends DynamicEntityManager
 
             return $table;
         }
-        catch (\Exception $e) // TODO: catch the right exception
+        catch (DBALException $e)
+        {
+            throw new RepositoryException(
+                $e->getMessage(),
+                $e->getCode(),
+                $e
+            );
+        }
+        catch (\Exception $e)
         {
             throw new RepositoryException(
                 $e->getMessage(),
