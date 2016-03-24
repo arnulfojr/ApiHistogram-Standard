@@ -69,4 +69,4 @@ Contact
 Arnulfo Solis
 email: arnulfojr@kuzzy.com
 twitter: @arnulfojr
-Demo: http://qcharts.myarny.org
+Demo: http://qcharts.myarny.org/qcharts
