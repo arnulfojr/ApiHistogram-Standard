@@ -1,5 +1,0 @@
-services:
-    api_histogram.persist:
-       class: ApiHistogramBundle\Services\Persist\Persist
-       arguments:
-           - @api_histogram.dynamic_repository

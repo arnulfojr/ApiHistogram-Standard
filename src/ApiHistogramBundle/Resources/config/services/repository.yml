@@ -1,6 +1,0 @@
-services:
-    api_histogram.dynamic_repository:
-        class: ApiHistogramBundle\Repository\Dynamic\DynamicRepository
-        arguments:
-            - @doctrine
-            - @api_histogram.site_manager
